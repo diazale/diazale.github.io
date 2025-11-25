@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+<link rel="icon" href=/logos/logo.png type="image/gif">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</noscript>
+
+
+<link rel="stylesheet" href="/css/font.css" media="all">
+
+
+
+<meta property="og:url" content="https://diazale.github.io/blogs/202511_dbc_intro/">
+  <meta property="og:site_name" content="Alex Diaz-Papkovich">
+  <meta property="og:title" content="Working Through Data: Death By Car">
+  <meta property="og:description" content="From April 2022 to September 2023, I collected news stories of car crashes in Canada. Specifically, crashes where the drivers struck something or someone other than another vehicle. The rules were simple:
+There was a motor vehicle involved; and The vehicle struck either a structure or a person who was not in a vehicle Part of why I constrained my data was to understand how much damage cars and their drivers were causing to people who were not themselves driving. Another part was that there is simply so much traffic violence that I would not be able to track it on my own—for damage to structures, I had to exclude things like hydro poles and traffic lights because it would be overwhelming.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blogs">
+    <meta property="article:published_time" content="2025-11-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-25T00:00:00+00:00">
+    <meta property="article:tag" content="Working Through Data">
+    <meta property="article:tag" content="Death by Car">
+    <meta property="article:tag" content="Projects">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Working Through Data: Death By Car">
+  <meta name="twitter:description" content="From April 2022 to September 2023, I collected news stories of car crashes in Canada. Specifically, crashes where the drivers struck something or someone other than another vehicle. The rules were simple:
+There was a motor vehicle involved; and The vehicle struck either a structure or a person who was not in a vehicle Part of why I constrained my data was to understand how much damage cars and their drivers were causing to people who were not themselves driving. Another part was that there is simply so much traffic violence that I would not be able to track it on my own—for damage to structures, I had to exclude things like hydro poles and traffic lights because it would be overwhelming.">
+
+
+<link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
+<link rel="stylesheet" href="/css/footer.css" media="all">
+
+
+<link rel="stylesheet" href="/css/theme.css" media="all">
+
+<style>
+    :root {
+        --text-color: #343a40;
+        --text-secondary-color: #6c757d;
+        --text-link-color: #007bff;
+        --background-color: #eaedf0;
+        --secondary-background-color: #64ffda1a;
+        --primary-color: #007bff;
+        --secondary-color: #f8f9fa;
+
+         
+        --text-color-dark: #e4e6eb;
+        --text-secondary-color-dark: #b0b3b8;
+        --text-link-color-dark: #ffffff;
+        --background-color-dark: #18191a;
+        --secondary-background-color-dark: #212529;
+        --primary-color-dark: #ffffff;
+        --secondary-color-dark: #212529;
+    }
+    body {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    html {
+        background-color: var(--background-color) !important;
+    }
+
+    body::-webkit-scrollbar {
+        height: 0px;
+        width: 8px;
+        background-color: var(--background-color);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background: #b0b0b0;
+        outline: 1px solid var(--background-color);
+    }
+
+    #search-content::-webkit-scrollbar {
+        width: .5em;
+        height: .1em;
+        background-color: var(--background-color);
+    }
+</style>
+
+
+
+<meta name="description" content="">
+<link rel="stylesheet" href="/css/single.css">
+
+
+<script defer src="/fontawesome-6/all-6.4.2.js"></script>
+
+
+  
+  
+
+  <title>
+Working Through Data: Death By Car | Alex Diaz-Papkovich
+
+  </title>
+</head>
+
+<body class="light">
+  
+  
+<script>
+    let localStorageValue = localStorage.getItem("pref-theme");
+    let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    switch (localStorageValue) {
+        case "dark":
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            break;
+        case "light":
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            break;
+        default:
+            if (mediaQuery) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+            }
+            break;
+    }
+</script>
+
+
+
+
+<script>
+    var prevScrollPos = window.pageYOffset;
+    window.addEventListener("scroll", function showHeaderOnScroll() {
+        let profileHeaderElem = document.getElementById("profileHeader");
+        let currentScrollPos = window.pageYOffset;
+        let resetHeaderStyle = false;
+        let showNavBarOnScrollUp =  true ;
+        let showNavBar = showNavBarOnScrollUp ? prevScrollPos > currentScrollPos : currentScrollPos > 0;
+        if (showNavBar) {
+            profileHeaderElem.classList.add("showHeaderOnTop");
+        } else {
+            resetHeaderStyle = true;
+        }
+        if(currentScrollPos === 0) {
+            resetHeaderStyle = true;
+        }
+        if(resetHeaderStyle) {
+            profileHeaderElem.classList.remove("showHeaderOnTop");
+        }
+        prevScrollPos = currentScrollPos;
+    });
+</script>
+
+
+
+<header id="profileHeader">
+    <nav class="pt-3 navbar navbar-expand-lg animate">
+        <div class="container-fluid mx-xs-2 mx-sm-5 mx-md-5 mx-lg-5">
+            
+            <a class="navbar-brand primary-font text-wrap" href="/">
+                
+                <img src="/logos/logo.png" width="30" height="30"
+                    class="d-inline-block align-top">
+                Alex Diaz-Papkovich
+                
+            </a>
+
+            
+                <div>
+                    <input id="search" autocomplete="off" class="form-control mr-sm-2 d-none d-md-block" placeholder='Ctrl &#43; k to Search...'
+                        aria-label="Search" oninput="searchOnChange(event)">
+                </div>
+            
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24" data-view-component="true">
+                    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+                </svg>
+            </button>
+
+            
+            <div class="collapse navbar-collapse text-wrap primary-font" id="navbarContent">
+                <ul class="navbar-nav ms-auto text-center">
+                    
+                        <li class="nav-item navbar-text d-block d-md-none">
+                            <div class="nav-link">
+                                <input id="search" autocomplete="off" class="form-control mr-sm-2" placeholder='Ctrl &#43; k to Search...' aria-label="Search" oninput="searchOnChange(event)">
+                            </div>
+                        </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#about" aria-label="about">
+                            About Me
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#experience"
+                            aria-label="experience">
+                            Professional experience
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#education"
+                            aria-label="education">
+                            Education
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#projects"
+                            aria-label="projects">
+                            Projects and collaborations
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/#achievements"
+                            aria-label="achievements">
+                            Teaching
+                        </a>
+                    </li>
+                    
+
+                    
+
+                    
+
+                    
+                    
+                    
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/files/diazpapkovich_academic_cv_online.pdf" title="Curriculum vitae">
+                            
+                            CV
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li class="nav-item navbar-text">
+                        <a class="nav-link" href="/blogs" title="Blog posts">
+                            
+                            Blog
+                        </a>
+                    </li>
+                    
+                    
+
+                    
+                    <li class="nav-item navbar-text">
+                        
+                        <div class="text-center">
+                            <button id="theme-toggle">
+                                <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                                <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </li>
+                    
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div id="content">
+<section id="single">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-12 col-lg-9">
+        <div class="pr-lg-4">
+          <div class="title mb-5">
+            <h1 class="text-center mb-4">Working Through Data: Death By Car</h1>
+            <div class="text-center">
+              
+                Alex Diaz-Papkovich
+                <small>|</small>
+              
+              Nov 25, 2025
+
+              
+            </div>
+          </div>
+          
+          <div class="featured-image">
+            <img class="img-fluid mx-auto d-block" src="/images/dbc_header.png" alt="Working Through Data: Death By Car">
+          </div>
+          
+          <article class="page-content  p-2">
+          <p>From April 2022 to September 2023, I collected news stories of car crashes in Canada.
+Specifically, crashes where the drivers struck something or someone <em>other</em> than another vehicle.
+The rules were simple:</p>
+<ul>
+<li>There was a motor vehicle involved; and</li>
+<li>The vehicle struck either a structure or a person who was not in a vehicle</li>
+</ul>
+<p>Part of why I constrained my data was to understand how much damage cars and their drivers were causing to people who were not themselves driving.
+Another part was that there is simply <em>so much traffic violence</em> that I would not be able to track it on my own&mdash;for damage to structures, I had to exclude things like hydro poles and traffic lights because it would be overwhelming.</p>
+<p>My numbers are conservative: everything I have recorded was mentioned in a news source, with a handful of entries sourced to social media posts by journalists or with photo or video evidence.
+In all, there were 2,223 incidents resulting in 286 structures damaged or destroyed and 2,420 victims, among whom are 540 killed and 1,573 wounded.
+The list of victims includes people that were not killed or injured and are not always counted, such as:</p>
+<ul>
+<li>A girl who was in a crosswalk when her friend was struck and left with <a href="https://web.archive.org/web/20220420071709/https://ottawa.ctvnews.ca/i-want-to-know-why-they-didn-t-stop-13-year-old-ottawa-hit-and-run-victim-leaves-cheo-1.5835315">a brain injury</a></li>
+<li>A family displaced when a driver <a href="https://web.archive.org/web/20230106174210/https://calgary.ctvnews.ca/significant-impact-driver-seriously-injured-after-truck-crashes-into-ogden-home-1.6220122">smashed into their home</a></li>
+<li>A cyclist threatened with violence and <a href="https://web.archive.org/web/20230609115846/https://www.cp24.com/news/alleged-toronto-anti-cyclist-road-rage-incident-caught-on-camera-1.6432159">homophobic slurs from a driver</a>.</li>
+</ul>
+<p>I paused this project in 2023 to complete my PhD and begin my postdoc.
+In revisiting it, I&rsquo;ve decided to write a series of blog posts provoked by questions I had during data collection.</p>
+<h2 id="the-questions">The questions</h2>
+<p>Setting aside the issues of bad infrastructure and worse drivers, the automobile is inherently dangerous.
+Seeking to be precise, I always wrote about drivers crashing cars, until I ran into multiple situations where people were killed by their own vehicles, such as a Mississauga woman who was killed when her unoccupied vehicle rolled onto her <a href="https://www.thestar.com/local-mississauga/news/2022/05/08/tragic-event-mississauga-woman-dies-after-vehicle-rolls-onto-her-in-own-driveway-peel-police-say.html?itm_source=parsely-api">in her driveway.</a>
+Does a car need a driver to be dangerous? Evidently not.</p>
+<p>I collected information about where collisions occured.
+I started asking how many people were injured or killed while crossing the street (98 pedestrians and 6 cyclists killed, at least 289 wounded) but also found cases of people being killed or injured or threatened while they were in parking lots (20 dead, 75 wounded) and on the sidewalk (20 dead, 64 wounded) and waiting for the bus (2 dead, 15 wounded) and cases of children being killed <a href="https://web.archive.org/web/20230724011316/https://montreal.ctvnews.ca/toddler-struck-and-killed-by-vehicle-at-quebec-campground-police-1.6491025">in a campground</a> or dodging cars while <a href="https://web.archive.org/web/20220715134603/https://barrie.ctvnews.ca/impaired-driver-narrowly-misses-child-before-entering-lake-in-innisfil-ssp-1.5987580">swimming in a lake</a> or sleeping in <a href="https://toronto.citynews.ca/2022/09/10/mississauga-car-crash-into-apartment-video/">their own beds</a> on the second floor of an apartment building.</p>
+<p>I tracked whether crashes were deliberate (at least 75 were) and I found stories of people who would otherwise be normal and peaceful escalating arguments or fights by getting behind the steering wheel and recognizing what they had in their hands was a weapon.
+How often did this scenario play out?
+At least 35 times that I could identify.</p>
+<p>I questioned the language used to describe injuries in news articles.
+I listed injuries that were &ldquo;minor&rdquo; or &ldquo;major&rdquo; or &ldquo;serious&rdquo; or &ldquo;critical&rdquo; or &ldquo;life-altering&rdquo; or &ldquo;life-threatening&rdquo; or (my favourite) &ldquo;non-life-threatening&rdquo;;
+this latter term appeared 310 times.</p>
+<p>I followed up whenever I could, reading an <a href="https://web.archive.org/web/20230322130840/https://halifax.citynews.ca/local-news/vehicle-pedestrian-crash-sends-man-to-halifax-hospital-6735053">initial news story</a> describing a man in Halifax being &ldquo;taken to hospital for treatment of what officers described as non-life threatening injuries&rdquo; and finding a <a href="https://web.archive.org/web/20230408082930/https://www.cbc.ca/news/canada/nova-scotia/mother-of-crosswalk-victim-calls-for-seniors-driving-tests-1.6801182">follow-up</a> describing an 89-year-old driver hitting a 29-year-old with his SUV, dragging him 30-40 feet and causing brain bleeds, skull fractures, and facial paralysis.
+The article ends with a discussion about taking away driving privileges from the elderly, distilling the absurdity of a society that prioritizes cars above all else: &ldquo;You take away that freedom from an older Canadian and you&rsquo;re taking away half their life.&rdquo;</p>
+<p>Should 89-year-olds be forced to drive to maintain a social life?
+Is 89 too old to drive an SUV?
+Is 17 too young to drive a Hummer H3, which weighs 5000lbs?
+What&rsquo;s the worst that could happen, aside from hitting and <a href="https://web.archive.org/web/20230201231254/https://globalnews.ca/news/9448332/teen-suffers-serious-injuries-struck-suv-grimsby/">nearly killing a student?</a>
+The more data I collected, the more questions I had.</p>
+<h3 id="the-details">The details</h3>
+<p>The dataset I&rsquo;ve collected is not a comprehensive survey of traffic violence in Canada&mdash;it is based off of news articles and will be biased towards areas with greater media coverage.
+News reports of crashes are often simply details repeated from police department press releases, but in some cases reporters will provide more context or interview victims, witnesses or neighbours.
+Whenever I could, I made an effort to find follow-up articles, which provided updates on legal proceedings or victims&rsquo; recoveries.</p>
+<p>I collected data in a semi-automated manner. Every day I ran a Python script that scanned news sources for keywords, and then I would manually sift through them, identify relevant web pages, and collect details.
+All of the scripts I used, as well as the data collected, are <a href="https://github.com/diazale/death_by_car">available online</a>.
+To reflect how I felt about the impact of automobiles on Canada, I named the project Death By Car.
+The data I collected went as far back as January 1, 2022, and continued until Autumn 2023.</p>
+<p>For every incident I collected details where available:</p>
+<ul>
+<li>Date, time, and location, as exact as I could get them</li>
+<li>Links to news stories. Whenever possible, I archived the news sources, though this sometimes failed.</li>
+<li>The vehicles involved, such as the type of car (e.g. bus, SUV, sedan, pickup, snowplough, tractor trailer), whether the driver stayed at the scene, and any details on the motion (such as whether it was during a turn)</li>
+<li>The victims involved, including their sex, age, injury status, location during the incident, and any other relevant details</li>
+<li>The people in the vehicle(s) and their sex, age, injury status, impairment status, and whether they were charged, ticketed, or arrested</li>
+<li>Any structures involved, the extent of the damage caused, and whether it was residential or non-residential</li>
+</ul>
+<p>Most people falling into the &ldquo;not in a vehicle&rdquo; category were pedestrians or cyclists, but it also includes situations with people on all-terrain vehicles, snowmobiles, horse-and-buggies, golf carts, mopeds, etc.
+These make up a small slice of the incidents, but I included them as I felt they fit the spirit of project.</p>
+
+          </article>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <div id="stickySideBar" class="sticky-sidebar">
+          
+
+          
+          <aside class="tags">
+            <h5>Tags</h5>
+            <ul class="tags-ul list-unstyled list-inline">
+              
+              <li class="list-inline-item"><a href="https://diazale.github.io/tags/working-through-data"
+                target="_blank"
+              >Working through data</a></li>
+              
+              <li class="list-inline-item"><a href="https://diazale.github.io/tags/death-by-car"
+                target="_blank"
+              >Death By Car</a></li>
+              
+              <li class="list-inline-item"><a href="https://diazale.github.io/tags/projects"
+                target="_blank"
+              >Projects</a></li>
+              
+            </ul>
+          </aside>
+          
+
+          
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-9 p-4">
+        
+      </div>
+    </div>
+  </div>
+  <button class="p-2 px-3" onclick="topFunction()" id="topScroll">
+    <i class="fas fa-angle-up"></i>
+  </button>
+</section>
+
+
+<div class="progress">
+  <div id="scroll-progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<Script src="/js/scrollProgressBar.js"></script>
+
+
+<script>
+  var topScroll = document.getElementById("topScroll");
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      topScroll.style.display = "block";
+    } else {
+      topScroll.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  
+  let stickySideBarElem = document.getElementById("stickySideBar");
+  let stickyNavBar =  true ;
+  if(stickyNavBar) {
+    let headerElem = document.getElementById("profileHeader");
+    let headerHeight = headerElem.offsetHeight + 15;
+    stickySideBarElem.style.top = headerHeight + "px";
+  } else {
+    stickySideBarElem.style.top = "50px";
+  }
+</script>
+
+
+
+
+  </div><footer>
+    
+ 
+
+<div class="text-center pt-2">
+    
+    <span class="px-1">
+        <a href="https://github.com/diazale" target="_blank" aria-label="github">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2.7em" height="2.7em" viewBox="0 0 1792 1792">
+                <path id="footer-socialNetworks-github-svg-path"
+                    d="M522 1352q-8 9-20-3-13-11-4-19 8-9 20 3 12 11 4 19zm-42-61q9 12 0 19-8 6-17-7t0-18q9-7 17 6zm-61-60q-5 7-13 2-10-5-7-12 3-5 13-2 10 5 7 12zm31 34q-6 7-16-3-9-11-2-16 6-6 16 3 9 11 2 16zm129 112q-4 12-19 6-17-4-13-15t19-7q16 5 13 16zm63 5q0 11-16 11-17 2-17-11 0-11 16-11 17-2 17 11zm58-10q2 10-14 14t-18-8 14-15q16-2 18 9zm964-956v960q0 119-84.5 203.5t-203.5 84.5h-224q-16 0-24.5-1t-19.5-5-16-14.5-5-27.5v-239q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-121-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-86-13.5q-44 113-7 204-79 85-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-40 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 103t.5 68q0 22-11 33.5t-22 13-33 1.5h-224q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z" />
+
+                <metadata>
+                    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+                        <rdf:Description about="https://iconscout.com/legal#licenses"
+                            dc:title="Github, Online, Project, Hosting, Square"
+                            dc:description="Github, Online, Project, Hosting, Square" dc:publisher="Iconscout"
+                            dc:date="2016-12-14" dc:format="image/svg+xml" dc:language="en">
+                            <dc:creator>
+                                <rdf:Bag>
+                                    <rdf:li>Font Awesome</rdf:li>
+                                </rdf:Bag>
+                            </dc:creator>
+                        </rdf:Description>
+                    </rdf:RDF>
+                </metadata>
+            </svg>
+        </a>
+    </span>
+    
+
+    
+
+    
+
+    
+
+    
+</div><div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center">
+            
+                <div class="pb-2">
+                    <a href="https://diazale.github.io/" title="Alex Diaz-Papkovich">
+                        <img alt="Footer logo" src="/logos/logo.png"
+                            height="40px" width="40px">
+                    </a>
+                </div>
+            
+            &copy; 2025  All rights reserved
+            <div class="text-secondary">
+                Made with
+                <span class="text-danger">
+                    &#10084;
+                </span>
+                and
+                <a href="https://github.com/gurusabarish/hugo-profile" target="_blank"
+                    title="Designed and developed by gurusabarish">
+                    Hugo Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</footer><script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+        document.documentElement.classList.remove('dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    }
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+</script>
+
+
+    <script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  <section id="search-content" class="py-2">
+    <div class="container" id="search-results"></div>
+  </section>
+</body>
+
+</html>
